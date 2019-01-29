@@ -1,0 +1,30 @@
+#outer {
+  border:2px solid green;
+  border-radius: 6px;
+  width: 100%;
+  height: 50%;
+}
+
+#inner {
+  height: 120px;
+  width: 340px;
+  background: blue;
+  margin: 0 auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#inner_email {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top: 5%;
+}
+
+#bt_up_file {
+  align-content: center;
+  background: red;
+  float: left;
+}
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File Demo</title>
+    <link rel="stylesheet" href="Global.css" type="text/css">
+</head>
+<body>
+    <div id="outer">
+      <div id="inner">
+        <img id="img"/>
+        <input type="file" id="file" name="file" />
+        <button id="bt_up_file">Upload</button>
+      </div>
+      <div id="inner_email">
+        <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fx4TFh4MGgwaPw4OURwQEg" style="text-decoration:none;"><img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png"/></a>
+      </div>
+    </div>
+</body>
+<script type="application/javascript">
+
+  function getXHR(){
+    var xhr = null;
+    if(XMLHttpRequest){
+      xhr = new XMLHttpRequest();
+    }else{
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhr;
+  }
+
+  function showImg(fileObj){
+    var fileimg = document.getElementById('outer');
+    var src = window.URL.createObjectURL(fileObj);
+    var img = document.createElement("img");
+    img.setAttribute('style', 'margin: 0 auto; display: flex; justify-content:center; align-items:center')
+    img.src = src;
+    var no = fileimg.childNodes;
+    for (var i=0; i<no.length; i++) {
+        if (no[i].nodeName == 'IMG') {
+          no[i].parentNode.removeChild(no[i]);
+        }
+    }
+    fileimg.appendChild(img);
+  }
+
+  //var file  = document.getElementById('file').files[0];
+  //var fd = new FormData();
+
+  document.getElementById('file').onchange = function (e) {
+    var file  = document.getElementById('file').files[0];
+    console.log(e.path)
+    showImg(file);
+  }
+
+  document.getElementById('bt_up_file').onclick = function () {
+      var ajax = new getXHR();
+          ajax.open('POST', 'http://192.168.2.52:8080/', true);
+      var fd = new FormData();
+    var file  = document.getElementById('file').files[0];
+      //fd.setAttribute('enctype','multipart/format-data');
+    fd.append("file", file);
+          ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4) {
+              console.log(ajax.responseText);
+              //var obj = JSON.parse(ajax.responseText);
+              //document.body.outerHTML(ajax.responseText);
+              document.open().write(ajax.responseText);
+              document.close();
+                alert(ajax.responseText);
+            }
+          }
+
+          ajax.send(fd);
+  }
+</script>
+</html>
